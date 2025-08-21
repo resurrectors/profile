@@ -85,3 +85,78 @@ export default defineConfig({
 Example: if repo name is profile, then:
 
 base: "/profile/"
+
+
+## How to manage environment variables
+
+⚙️ How to Manage Environment Variables in Vite + React
+1. Use .env Files for Each Environment
+Create separate .env files at your project root:
+
+.env                # default (applies everywhere)
+.env.development    # only for dev
+.env.staging        # only for staging
+.env.production     # only for prod
+Example:
+
+.env.development
+
+  VITE_API_URL=http://localhost:5000/api
+  VITE_MODE=development
+.env.staging
+
+  VITE_API_URL=https://staging.example.com/api
+  VITE_MODE=staging
+.env.production
+
+  VITE_API_URL=https://api.example.com
+  VITE_MODE=production
+
+⚠️ Important: In Vite, env variables must start with VITE_ to be exposed to the client.
+
+2. Access Variables in Your React Code
+console.log(import.meta.env.VITE_API_URL);
+3. Build for Different Environments
+When you run:
+
+npm run dev
+→ Vite automatically loads .env.development.
+
+When you run:
+
+npm run build
+→ By default it loads .env.production.
+
+If you want staging build:
+
+vite build --mode staging
+That will load .env.staging.
+
+4. Update package.json Scripts for Easy Switching
+"scripts": {
+  "dev": "vite",
+  "build:dev": "vite build --mode development",
+  "build:staging": "vite build --mode staging",
+  "build:prod": "vite build --mode production",
+  "deploy:staging": "vite build --mode staging && gh-pages -d dist",
+  "deploy:prod": "vite build --mode production && gh-pages -d dist"
+}
+Now you can easily run:
+
+npm run build:staging
+npm run deploy:prod
+5. Secure Secrets
+Don’t put API keys/secrets directly in client-side .env (they’re exposed after build).
+
+For secrets → keep them on a backend or use a serverless function (Netlify functions, Firebase, etc.).
+
+✅ With this setup:
+
+Local dev → .env.development
+
+Staging → .env.staging
+
+Production → .env.production
+
+Easy to switch with --mode or npm scripts.
+
