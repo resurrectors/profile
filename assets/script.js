@@ -1,4 +1,4 @@
-/* Shubham Sanjay Patil — Portfolio interactions (vanilla JS) */
+/* Shubham Sanjay Patil - Portfolio interactions (vanilla JS) */
 (function () {
   'use strict';
 
@@ -13,7 +13,7 @@
     } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
       root.setAttribute('data-theme', 'light');
     }
-  } catch (e) { /* private mode / blocked storage — ignore */ }
+  } catch (e) { /* private mode / blocked storage - ignore */ }
 
   var toggle = document.getElementById('themeToggle');
   if (toggle) {
